@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>x1 Bela Vista</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding-top: 20px;
+        }
+        .container {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+            width: 90%;
+            max-width: 800px;
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 20px;
+        }
+        .left-column {
+            flex: 1;
+            margin-right: 20px;
+        }
+        .right-column {
+            flex: 2;
+        }
+        h1 {
+            text-align: center;
+        }
+        .game {
+            border-bottom: 1px solid #ccc;
+            padding: 10px 0;
+        }
+        .image-container {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .image-container img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 8px;
+        }
+        .edit-area, .bet-area, .withdraw-area {
+            margin-top: 20px;
+        }
+        label {
+            display: block;
+            margin-top: 10px;
+        }
+        input[type="text"], input[type="datetime-local"], input[type="number"], input[type="password"] {
+            width: calc(100% - 20px);
+            padding: 8px;
+            margin-top: 5px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+        button {
+            padding: 10px 20px;
+            background-color: #28a745;
+            color: #fff;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+        button:disabled {
+            background-color: #ccc;
+        }
+        .social-links {
+            text-align: center;
+            margin-top: 20px;
+        }
+        .social-links a {
+            margin: 0 10px;
+            text-decoration: none;
+            color: #007bff;
+        }
+        .hidden {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="left-column">
+            <div class="bet-area">
+                <h2>Área de Depósito</h2>
+                <p>Depósito mínimo: R$ 5,00</p>
+                <label for="deposit-amount">Valor do Depósito:</label>
+                <input type="number" id="deposit-amount" min="5" step="0.01">
+                <button onclick="makeDeposit()">Depositar via Pix</button>
+            </div>
+
+            <div class="withdraw-area">
+                <h2>Área de Saque</h2>
+                <label for="withdraw-amount">Valor do Saque:</label>
+                <input type="number" id="withdraw-amount" min="1" step="0.01">
+                <button onclick="makeWithdrawal()">Solicitar Saque</button>
+            </div>
+
+            <div class="game">
+                <h2>Jogo da Semana</h2>
+                <p><strong>Times:</strong> <span id="game-teams"></span></p>
+                <p><strong>Data e Hora:</strong> <span id="game-date"></span></p>
+            </div>
+        </div>
+
+        <div class="right-column">
+            <h1>x1 Bela Vista</h1>
+            <div class="image-container">
+                <img src="path/to/your/image.jpg" alt="Imagem do Evento">
+            </div>
+
+            <div class="edit-password-area">
+                <h2>Acesso de Edição</h2>
+                <label for="edit-password">Senha:</label>
+                <input type="password" id="edit-password">
+                <button onclick="showEditArea()">Entrar</button>
+            </div>
+
+            <div class="edit-area hidden">
+                <h2>Editar Jogo</h2>
+                <label for="edit-team1">Time 1:</label>
+                <input type="text" id="edit-team1">
+                <label for="edit-team2">Time 2:</label>
+                <input type="text" id="edit-team2">
+                <label for="edit-date">Data e Hora:</label>
+                <input type="datetime-local" id="edit-date">
+                <button onclick="saveGame()">Salvar Jogo</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="social-links">
+        <a href="https://instagram.com/yourpage" target="_blank">Instagram</a>
+        <a href="https://facebook.com/yourpage" target="_blank">Facebook</a>
+        <a href="https://twitter.com/yourpage" target="_blank">Twitter</a>
+    </div>
+
+    <script>
+        // Dados iniciais do jogo
+        let game = { team1: "Time A", team2: "Time B", date: "2024-05-25T18:00" };
+
+        function displayGame() {
+            document.getElementById('game-teams').innerText = `${game.team1} vs ${game.team2}`;
+            document.getElementById('game-date').innerText = new Date(game.date).toLocaleString();
+        }
+
+        function showEditArea() {
+            const password = document.getElementById('edit-password').value;
+            if (password === '1234') { // Troque pela senha real
+                document.querySelector('.edit-area').classList.remove('hidden');
+            } else {
+                alert('Senha incorreta.');
+            }
+        }
+
+        function saveGame() {
+            const team1 = document.getElementById('edit-team1').value;
+            const team2 = document.getElementById('edit-team2').value;
+            const date = document.getElementById('edit-date').value;
+            
+            if (team1 && team2 && date) {
+                game = { team1, team2, date };
+                displayGame();
+                alert('Jogo atualizado com sucesso.');
+            } else {
+                alert('Por favor, preencha todos os campos.');
+            }
+        }
+
+        function makeDeposit() {
+            const amount = document.getElementById('deposit-amount').value;
+            if (amount >= 5) {
+                const pixLink = `https://lh3.googleusercontent.com/pw/AP1GczP7cJXfXL8nPIzMwmyW5hX5u2cm2DE42DBP1Flw5Nx7OaMg74Q2C_W4ho_kWDAX_hraqivl2fvxA8mZXed8cr8sbfX7DSYxaTw35HXvfLpEmN4SYaRmd_iIRHeS1U8bHETQTef9daFSpowgF0JUdLeC=w400-h400-s-no-gm?authuser=0`;
+                window.location.href = pixLink;
+            } else {
+                alert('O depósito mínimo é de R$ 5,00.');
+            }
+        }
+
+        function makeWithdrawal() {
+            const amount = document.getElementById('withdraw-amount').value;
+            if (amount >= 1) {
+                alert('Saque solicitado: R$ ' + amount);
+                // Aqui você implementaria a lógica para processar o saque
+            } else {
+                alert('O valor mínimo para saque é de R$ 1,00.');
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', displayGame);
+    </script>
+</body>
+</html>
